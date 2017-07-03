@@ -6,6 +6,7 @@ map <F2> <Esc>:w<CR>:!%:p<CR>  " Save and run opened file
 map <F2> <Esc>:w<CR>:!%:p:S<CR>
 set visualbell
 set relativenumber
+set number
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Maintainer: 
