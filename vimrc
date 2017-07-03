@@ -5,6 +5,7 @@ map <F2> <Esc>:w<CR>:!%:p<CR>  " Save and run opened file
 " Save and run opened file. :S excapes spaces in the execution path
 map <F2> <Esc>:w<CR>:!%:p:S<CR>
 set visualbell
+set relativenumber
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Maintainer: 
