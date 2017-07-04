@@ -7,6 +7,8 @@ map <F2> <Esc>:w<CR>:!%:p:S<CR>
 set visualbell
 set relativenumber
 set number
+" Displays a line at the cursor set cursorline
+set cursorline
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Maintainer: 
