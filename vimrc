@@ -10,6 +10,8 @@ set number
 " Displays a line at the cursor set cursorline
 set cursorline
 
+" :help always opens help in a new tab
+:cabbrev help tab help
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Maintainer: 
 "       Amir Salihefendic
