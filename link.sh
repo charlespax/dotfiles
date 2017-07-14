@@ -1,6 +1,6 @@
 #!/bin/sh
 
-ln -s ~/dotfiles/vimrc ~/.vimrc
-ln -s ~/dotfiles/bash_profile ~/.bash_profile
-ln -s ~/dotfiles/bash_profile ~/.bashrc
+ln -f -s ~/dotfiles/vimrc ~/.vimrc
+ln -f -s ~/dotfiles/bash_profile ~/.bash_profile
+ln -f -s ~/dotfiles/bash_profile ~/.bashrc
 
