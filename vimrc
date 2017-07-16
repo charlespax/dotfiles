@@ -1,13 +1,16 @@
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Personal
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-map <F2> <Esc>:w<CR>:!%:p<CR>  " Save and run opened file
-" Save and run opened file. :S excapes spaces in the execution path
+" Save and run opened file
+map <F2> <Esc>:w<CR>:!%:p<CR>  
+
+" Save and run opened file. :S escapes spaces in the execution path
 map <F2> <Esc>:w<CR>:!%:p:S<CR>
 set visualbell
 set relativenumber
 set number
-" Displays a line at the cursor set cursorline
+
+" Displays a horizontal line at the cursor 
 set cursorline
 
 " :help always opens help in a new tab
