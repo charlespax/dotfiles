@@ -12,6 +12,18 @@ set cursorline
 
 " :help always opens help in a new tab
 :cabbrev help tab help
+
+" Enable code folding in syntax mode.
+" zc - Fold code block
+" zo - Unfold code block
+" zM - Folds all blocks
+" zR - Unforlds all blocks
+" More info: http://vim.wikia.com/wiki/Folding
+set foldmethod=syntax
+set foldnestmax=10
+set nofoldenable
+set foldlevel=2
+
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Maintainer: 
 "       Amir Salihefendic
