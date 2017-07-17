@@ -1,6 +1,8 @@
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Personal
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+set nocompatible
+
 " Save and run opened file
 map <F2> <Esc>:w<CR>:!%:p<CR>  
 
@@ -26,6 +28,9 @@ set foldmethod=syntax
 set foldnestmax=10
 set nofoldenable
 set foldlevel=2
+" Enable folding for bash scripts
+au FileType sh let g:sh_fold_enabled=5
+au FileType sh let g:is_bash=1
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Maintainer: 
