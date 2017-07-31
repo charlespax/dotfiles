@@ -6,6 +6,9 @@ export LSCOLORS=GxFxCxDxBxegedabagaced
 # Give some default flags to ls
 alias ls='ls -GFh'
 
+# Get weather reports
+alias weather='curl wttr.in/?n?p'
+
 # set PATH to include a ~/bin/ directory
 if [ -d "$HOME/bin" ]; then
     PATH="$HOME/bin:$PATH"
