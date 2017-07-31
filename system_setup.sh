@@ -14,7 +14,14 @@ eval $(source /etc/os-release; echo UBUNTU_CODENAME=$UBUNTU_CODENAME;)
 
 ## Devleopment tools
 sudo apt-get install vim
-sudo apt-get isntall git
+# Install git
+sudo apt-get install git
+git config --global user.email "charles.pax@gmail.com"
+git config --global user.name "Charles Edward Pax"
+git config --global diff.tool vimdiff
+git config --global difftool.prompt false
+git config --global alias.d difftool
+# Build tools
 sudo apt-get install build-essential
 sudo apt-get install exuberant-ctags
 
