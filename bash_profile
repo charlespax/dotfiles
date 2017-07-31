@@ -7,7 +7,7 @@ export LSCOLORS=GxFxCxDxBxegedabagaced
 alias ls='ls -GFh'
 
 # Get weather reports
-alias weather='curl wttr.in/?n?p'
+alias weather='curl wttr.in/?n?p?2'
 
 # set PATH to include a ~/bin/ directory
 if [ -d "$HOME/bin" ]; then
