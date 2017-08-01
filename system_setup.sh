@@ -7,6 +7,7 @@
 # - Add help function
 # - Determine what OS we are running
 #   * if mint...; elif ubuntu...
+# - Install skype. See https://repo.skype.com/
 
 USERNAME=`whoami`
 # Get the Ubunth codename for this Linux Mint version
@@ -31,12 +32,17 @@ sudo apt-get install exuberant-ctags
 sudo add-apt-repository ppa:teejee2008/ppa
 sudo apt-get update
 sudo apt-get install ukuu
+# Timeshift backup system
+sudo apt-get install timeshift
 
 ## Applications
 # Chromium browser
 sudo apt-get install chromium-browser
 # Install SpeedCrunch, a calculator
 sudo apt-get install speedcrunch
+# Install latest LibreOffice
+sudo add-apt-repository ppa:libreoffice/ppa
+sudo apt update && sudo apt install libreoffice
 
 ## Install Virtualbox 5.1.x
 # Add Virtualbox repo for yakkety 
