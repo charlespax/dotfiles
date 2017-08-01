@@ -24,7 +24,10 @@ git config --global difftool.prompt false
 git config --global alias.d difftool
 # Build tools
 sudo apt-get install build-essential
+# ctags tagging tool. Used with vim
 sudo apt-get install exuberant-ctags
+# Doxygen documentation generator
+sudo apt-get install doxygen graphviz
 
 ## System tools
 # ukuu kernel manager
