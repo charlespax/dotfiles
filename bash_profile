@@ -19,6 +19,11 @@ if [ -d "$HOME/bin" ]; then
     PATH="$HOME/bin:$PATH"
 fi
 
+# Export paths for the go language
+export GOPATH=~/gocode
+export PATH=$PATH:$GOPATH/bin
+
+
 # Export the opencm3 directory
 export OPENCM3_DIR=~/lib/libopencm3/
 

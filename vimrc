@@ -17,6 +17,10 @@ set cursorline
 
 " :help always opens help in a new tab
 :cabbrev help tab help
+vmap j gj
+vmap k gk
+nmap j gj
+nmap k gk
 
 " Enable code folding in syntax mode.
 " zc - Fold code block
