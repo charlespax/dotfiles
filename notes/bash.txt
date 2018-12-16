@@ -1,0 +1,18 @@
+
+=== tcups ===
+$ tcups cols        (number of columns in temrinal)
+$ tcups lines       (number of lines in terminal)
+
+=== screen ===
+'screen' is an application that manages terminal screens. It can split the terminal and have multiple "windows".
+
+screen              (start the application)
+Ctrl+a c            (new window)
+Ctrl+a n            (next window)
+Ctrl+a p            (previous window)
+Ctrl+a "            (select window form list)
+Ctrl+a Ctrl+a       (previously iewed window)
+Ctrl+a |            (split window into vertical regions)
+Ctrl+a S            (split window into horizontal regions)
+ctrl+a tab          (next region)
+Ctrl+a :resize      (resize region)
