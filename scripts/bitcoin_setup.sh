@@ -44,6 +44,7 @@ GO_FILENAME="go1.11.5.linux-amd64.tar.gz"
 GO_URL="https://dl.google.com/go/"
 GO_FILEURL=$GO_URL/$GO_FILENAME
 GO_HASH=`echo "ff54aafedff961eb94792487e827515da683d61a5f9482f668008832631e5d25"`
+GO_VERSION_STRING="go version go1.11.5 linux/amd64"
 
 download_go() {
     echo Downloading GO... 
@@ -67,7 +68,7 @@ fi
 
 # Install GO
 printf "Checking GO language... "
-DESIRED_GO_VERSION="go version go1.11.5 linux/amd64"
+DESIRED_GO_VERSION=$GO_VERSION_STRING
 if [ "$DESIRED_GO_VERSION" = "`command go version`" ]; then
     echo "$DESIRED_GO_VERSION installed"
 else
