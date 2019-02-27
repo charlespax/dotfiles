@@ -59,7 +59,7 @@ download_go() {
 }
 
 if [ -f $GO_FILENAME ]; then
-    print "$GO_FILENAME found"
+    echo "$GO_FILENAME found"
 else
     download_go
 fi
