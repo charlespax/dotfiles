@@ -67,6 +67,7 @@ else
     export GOPATH=~/gocode
     export PATH=$PATH:$GOPATH/bin
 
+    echo "PATH=$PATH:/usr/local/go/bin" >> ~/.bashrc
     echo "export GOPATH=~/gocode" >> ~/.bashrc
     echo "export PATH=\$PATH:\$GOPATH/bin" >> ~/.bashrc
     source ~./bashrc
