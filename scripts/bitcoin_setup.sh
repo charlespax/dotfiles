@@ -1,12 +1,24 @@
 #!/bin/bash
 
+# Tested on lubuntu 18.10
+# # Connect to wifi
+# # git is already installed
+# git clone https://github.com/charlespax/dotfiles
+# cd dotfiles/scripts/
+# ./bitcoin_setup.sh
+
+
 # This installation process is taken from
 # https://github.com/lightningnetwork/lnd/blob/master/docs/INSTALL.md
 
 # This section checks to see if bitcoind is already installed
 
+# TODO Support i386
+# TODO Support ARM
 # TODO Use the official binaries for installation instead of repositories
-#      Include a hash check.
+#      Include a hash check. Note that the ppa does not have file for
+#      ubuntu disco prerelease as of 2019-02-26. In this case, using the
+#      official binaries would be better.
 # TODO Determine bitcoind installed version
 printf "Checking for bitcoind installation... "
 INSTALLED="$(command -v bitcoind)"
@@ -22,6 +34,8 @@ fi
 
 # TODO Test to see if GO v1.11 or higher is installed before downloading
 # TODO Test to see golang 1.11 or higher is in the repositories
+#      v1.11 and 1.12 are in ubuntu-19.04 as of 2019-02-26
+# TODO Give the option of downloading from the repository or official binaries
 # TODO Put blocks of code into functions
 
 # Download and verify the go language installation file
@@ -55,6 +69,7 @@ else
 
     echo "export GOPATH=~/gocode" >> ~/.bashrc
     echo "export PATH=\$PATH:\$GOPATH/bin" >> ~/.bashrc
+    source ~./bashrc
     if [ "$DESIRED_GO_VERSION" = "`command go version`" ]; then
         echo "COMPLETE"
         echo "Installing GO language... $DESIRED_GO_VERSION installed"
