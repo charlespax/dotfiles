@@ -45,7 +45,8 @@ if [ "${INSTALLED##*/}" = "bitcoind" ]; then
 else
     echo "NOT installed"
     echo "Installing bitcoind from ppa... "
-    echo $install_bitcoin_from_ppa
+    result=$(install_bitcoin_from_ppa)
+    echo $result
 fi
 
 # See https://golang.org/dl/ for the latest version of go
