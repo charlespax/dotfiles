@@ -1,38 +1,54 @@
 #!/bin/bash
 
-source ~/.bashrc
 # Tested on lubuntu 18.10
 # # Connect to wifi
 # # git is already installed
 # git clone https://github.com/charlespax/dotfiles
 # cd dotfiles/scripts/
 # ./bitcoin_setup.sh
-
-
 # This installation process is taken from
 # https://github.com/lightningnetwork/lnd/blob/master/docs/INSTALL.md
 
+source ~/.bashrc
 # This section checks to see if bitcoind is already installed
 
 # TODO Support i386
 # TODO Support ARM
+# TODO Determine bitcoind installed version
+
+install_bitcoind_from_ppa () {
+    # Attempt to install bitcoind
+    # return true if successful
+    # return false if unsuccessful
+    sudo apt-add-repository -y ppa:bitcoin/bitcoin
+    sudo apt-get update
+    sudo apt-get -y install bitcoind bitcoin-qt
+    local status="$(command -v bitcoind)"
+    if [ "${status##*/}" = "bitcoind" ]; then
+        echo "true"
+    else
+        echo "false"
+    fi
+}
+
 # TODO Use the official binaries for installation instead of repositories
 #      Include a hash check. Note that the ppa does not have file for
 #      ubuntu disco prerelease as of 2019-02-26. In this case, using the
 #      official binaries would be better.
-# TODO Determine bitcoind installed version
+install_bitcoind_from_binary () {
+    :
+}
 printf "Checking for bitcoind installation... "
 INSTALLED="$(command -v bitcoind)"
 if [ "${INSTALLED##*/}" = "bitcoind" ]; then
     echo "INSTALLED"
 else
     echo "NOT installed"
-    echo "Installing bitcoind... "
-    sudo apt-add-repository -y ppa:bitcoin/bitcoin
-    sudo apt-get update
-    sudo apt-get -y install bitcoind bitcoin-qt
+    echo "Installing bitcoind from ppa... "
+    echo $install_bitcoin_from_ppa
 fi
 
+# See https://golang.org/dl/ for the latest version of go
 # TODO Test to see if GO v1.11 or higher is installed before downloading
 # TODO Test to see golang 1.11 or higher is in the repositories
 #      v1.11 and 1.12 are in ubuntu-19.04 as of 2019-02-26
