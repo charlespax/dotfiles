@@ -1,5 +1,6 @@
 #!/bin/bash
 
+source ~/.bashrc
 # Tested on lubuntu 18.10
 # # Connect to wifi
 # # git is already installed
