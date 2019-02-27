@@ -88,3 +88,7 @@ else
         exit 1
     fi
 fi
+
+# TODO Figure out a mechanism to updating the PATH in the bash session
+#      from which the bitcoin script is run.
+echo "Exit this terminal, start a new terminal session, and rerun this script."
