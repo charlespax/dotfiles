@@ -45,7 +45,7 @@ if [ "${INSTALLED##*/}" = "bitcoind" ]; then
 else
     echo "NOT installed"
     echo "Installing bitcoind from ppa... "
-    install_bitcoind_from_ppa
+    result=install_bitcoind_from_ppa
     echo $result
 fi
 
