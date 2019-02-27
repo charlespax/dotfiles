@@ -79,7 +79,7 @@ else
     echo "export PATH=$PATH:/usr/local/go/bin" >> ~/.bashrc
     echo "export GOPATH=~/gocode" >> ~/.bashrc
     echo "export PATH=\$PATH:\$GOPATH/bin" >> ~/.bashrc
-    source ~./bashrc
+    source ~/.bashrc
     if [ "$DESIRED_GO_VERSION" = "`command go version`" ]; then
         echo "COMPLETE"
         echo "Installing GO language... $DESIRED_GO_VERSION installed"
