@@ -16,6 +16,12 @@ source ~/.bashrc
 # TODO Support ARM
 # TODO Determine bitcoind installed version
 
+echo "******************************************"
+echo "******************************************"
+echo "**** Installing Lightning Node ***********"
+echo "******************************************"
+echo "******************************************"
+
 install_bitcoind_from_ppa () {
     # Attempt to install bitcoind
     # return true if successful
@@ -49,7 +55,7 @@ install_bitcoind_from_binary () {
 }
 
 printf "Checking for bitcoind installation... "
-if [ "$(bitcoind_installed)" = true ]; then
+if [ $(bitcoind_installed) = true ]; then
     echo "INSTALLED"
 else
     echo "NOT installed"
