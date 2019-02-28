@@ -193,6 +193,7 @@ if [ "$(lnd_installed)" = "true" ]; then
     install_btcd
 else
     echo "Installing lnd... "
+    echo "This may take several minutes"
     install_lnd
     update_lnd
     install_btcd
