@@ -132,12 +132,13 @@ check_lnd () {
 }
 
 lnd_installed () {
+    LND_VERSION_STRING="0.5.0-beta"
     # return "true" if 'lnd' is installed at or above desired version
     # return "false" otherwise
-    if [ "`command lnd --version`" = "lnd: command not found" ]; then
-        echo "false"
-    else
+    if [ "$(LND_VERSION_STRING | cut -d " " -f 3)" = "`command lnd --version`" ]; then
         echo "true"
+    else
+        echo "false"
     fi
 }
 
