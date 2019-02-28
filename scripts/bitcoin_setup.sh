@@ -132,6 +132,8 @@ check_lnd () {
 }
 
 lnd_installed () {
+    # TODO Make the version string check better. Just make sure the check
+    # returns a version number and not an error.
     LND_VERSION_STRING="0.5.0-beta"
     # return "true" if 'lnd' is installed at or above desired version
     # return "false" otherwise
@@ -183,7 +185,7 @@ else
     install_go
 fi
 
-printf "Checking for go installation... "
+printf "Checking for lnd installation... "
 if [ "$(lnd_installed)" = "true" ]; then
     echo "INSTALLED"
     echo "Updating lnd... "
