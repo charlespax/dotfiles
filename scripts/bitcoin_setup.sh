@@ -55,7 +55,7 @@ install_bitcoind_from_binary () {
 }
 
 printf "Checking for bitcoind installation... "
-if [ -z "$(bitcoind_installed) ]; then
+if [ -z "$(bitcoind_installed)" ]; then
     echo "INSTALLED"
 else
     echo "NOT installed"
