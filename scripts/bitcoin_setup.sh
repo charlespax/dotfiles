@@ -72,6 +72,39 @@ download_go() {
     fi
 }
 
+install_go () {
+    # Install GO
+    printf "Checking GO installation... "
+    DESIRED_GO_VERSION=$GO_VERSION_STRING
+    if [ "$DESIRED_GO_VERSION" = "`command go version`" ]; then
+        echo "$DESIRED_GO_VERSION installed"
+    else
+        # See if we already have the file
+        if [ -f $GO_FILENAME ]; then
+            echo "$GO_FILENAME found"
+        else
+            download_go
+        fi
+        printf "Installing GO language... "
+        sudo tar -C /usr/local -xzf $GO_FILENAME
+        export PATH=$PATH:/usr/local/go/bin
+        export GOPATH=~/gocode
+        export PATH=$PATH:$GOPATH/bin
+
+        echo "export PATH=$PATH:/usr/local/go/bin" >> ~/.bashrc
+        echo "export GOPATH=~/gocode" >> ~/.bashrc
+        echo "export PATH=\$PATH:\$GOPATH/bin" >> ~/.bashrc
+        source ~/.bashrc
+        if [ "$DESIRED_GO_VERSION" = "`command go version`" ]; then
+            echo "COMPLETE"
+            echo "Installing GO language... $DESIRED_GO_VERSION installed"
+        else
+            echo "Installing GO language... ERROR: 'go' not present"
+            exit 1
+        fi
+    fi
+}
+
 # TODO Use the official binaries for installation instead of repositories
 #      Include a hash check. Note that the ppa does not have file for
 #      ubuntu disco prerelease as of 2019-02-26. In this case, using the
@@ -102,8 +135,8 @@ if [ "$(go_installed)" = "true" ]; then
     echo "INSTALLED"
 else
     echo "NOT installed"
-    echo "Installing bitcoind from ppa... "
-    download_go
+    echo "Installing bitcoind from $GO_FILEURL "
+    install_go
 fi
 
 # See https://golang.org/dl/ for the latest version of go
@@ -114,37 +147,8 @@ fi
 # TODO Put blocks of code into functions
 
 
-if [ -f $GO_FILENAME ]; then
-    echo "$GO_FILENAME found"
-else
-    download_go
-fi
-
-# Install GO
-printf "Checking GO language... "
-DESIRED_GO_VERSION=$GO_VERSION_STRING
-if [ "$DESIRED_GO_VERSION" = "`command go version`" ]; then
-    echo "$DESIRED_GO_VERSION installed"
-else
-    printf "Installing GO language... "
-    sudo tar -C /usr/local -xzf $GO_FILENAME
-    export PATH=$PATH:/usr/local/go/bin
-    export GOPATH=~/gocode
-    export PATH=$PATH:$GOPATH/bin
-
-    echo "export PATH=$PATH:/usr/local/go/bin" >> ~/.bashrc
-    echo "export GOPATH=~/gocode" >> ~/.bashrc
-    echo "export PATH=\$PATH:\$GOPATH/bin" >> ~/.bashrc
-    source ~/.bashrc
-    if [ "$DESIRED_GO_VERSION" = "`command go version`" ]; then
-        echo "COMPLETE"
-        echo "Installing GO language... $DESIRED_GO_VERSION installed"
-    else
-        echo "Installing GO language... ERROR: 'go' no present"
-        exit 1
-    fi
-fi
 
 # TODO Figure out a mechanism to updating the PATH in the bash session
 #      from which the bitcoin script is run.
+# TODO Only print this message if necessary
 echo "Exit this terminal, start a new terminal session, and rerun this script."
