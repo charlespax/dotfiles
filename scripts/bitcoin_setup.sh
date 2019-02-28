@@ -185,6 +185,9 @@ fi
 printf "Checking for go installation... "
 if [ "$(lnd_installed)" = "true" ]; then
     echo "INSTALLED"
+    echo "Updating lnd... "
+    update_lnd
+    install_btcd
 else
     echo "Installing lnd... "
     install_lnd
