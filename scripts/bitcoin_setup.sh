@@ -21,7 +21,8 @@ source ~/.bashrc
 # TODO Support i386
 # TODO Support ARM
 # TODO Determine bitcoind installed version
-
+# TODO Keep a set of variables to store the status of each installation
+# TODO Print a status report at the end of the script
 
 install_bitcoind_from_ppa () {
     # Attempt to install bitcoind
@@ -91,6 +92,8 @@ install_go () {
         export GOPATH=~/gocode
         export PATH=$PATH:$GOPATH/bin
 
+        # TODO check if the environmental variables are set in bashrc
+        # before adding this information again.
         echo "export PATH=$PATH:/usr/local/go/bin" >> ~/.bashrc
         echo "export GOPATH=~/gocode" >> ~/.bashrc
         echo "export PATH=\$PATH:\$GOPATH/bin" >> ~/.bashrc
@@ -123,6 +126,10 @@ check_lnd () {
     make check
 }
 
+install_btcd () {
+    cd $GOPATH/src/github.com/lightningnetwork/lnd
+    make btcd
+}
 
 # TODO Use the official binaries for installation instead of repositories
 #      Include a hash check. Note that the ppa does not have file for
@@ -162,8 +169,11 @@ if [ true ]; then
     echo "Installing lnd... "
     install_lnd
     update_lnd
+    install_btcd
     check_lnd
 fi
+
+echo "Installation complete. Run 'source ~/.bashrc' to update this terminal session."
 
 # See https://golang.org/dl/ for the latest version of go
 # TODO Test to see if GO v1.11 or higher is installed before downloading
@@ -176,4 +186,3 @@ fi
 
 # TODO Figure out a mechanism to updating the PATH in the bash session
 #      from which the bitcoin script is run.
-# TODO Only print this message if necessary
