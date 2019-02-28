@@ -9,35 +9,36 @@
 # This installation process is taken from
 # https://github.com/lightningnetwork/lnd/blob/master/docs/INSTALL.md
 
+# Global variables
+GO_FILENAME="go1.11.5.linux-amd64.tar.gz"
+GO_HASH=`echo "ff54aafedff961eb94792487e827515da683d61a5f9482f668008832631e5d25"`
+GO_URL="https://dl.google.com/go/"
+GO_FILEURL=$GO_URL/$GO_FILENAME
+GO_VERSION_STRING="go version go1.11.5 linux/amd64"
+
 source ~/.bashrc
-# This section checks to see if bitcoind is already installed
 
 # TODO Support i386
 # TODO Support ARM
 # TODO Determine bitcoind installed version
 
-echo "******************************************"
-echo "******************************************"
-echo "**** Installing Lightning Node ***********"
-echo "******************************************"
-echo "******************************************"
 
 install_bitcoind_from_ppa () {
     # Attempt to install bitcoind
-    # return true if successful
-    # return false if unsuccessful
     sudo apt-add-repository -y ppa:bitcoin/bitcoin
     sudo apt-get update
     sudo apt-get -y install bitcoind bitcoin-qt
     local status="$(command -v bitcoind)"
     if [ "${status##*/}" = "bitcoind" ]; then
-        echo "true"
+        echo "Installing bitcoind from ppa... SUCCESS"
     else
-        echo "false"
+        echo "Installing bitcoind from ppa... ERROR"
     fi
 }
 
 bitcoind_installed () {
+    # return "true" if bitcoind is installed
+    # return "false" otherwise
     local status="$(command -v bitcoind)"
     if [ "${status##*/}" = "bitcoind" ]; then
         echo "true"
@@ -45,6 +46,17 @@ bitcoind_installed () {
         echo "false"
     fi
 }
+
+go_installed () {
+    # return "true" if 'go' is installed at or above desired version
+    # return "false" otherwise
+    if [ "$GO_VERSION_STRING" = "`command go version`" ]; then
+        echo "true"
+    else
+        echo "false"
+    fi
+}
+
 
 # TODO Use the official binaries for installation instead of repositories
 #      Include a hash check. Note that the ppa does not have file for
@@ -53,6 +65,14 @@ bitcoind_installed () {
 install_bitcoind_from_binary () {
     :
 }
+
+echo "******************************************"
+echo "******************************************"
+echo "***                                    ***"
+echo "***     Installing Lightning Node      ***"
+echo "***                                    ***"
+echo "******************************************"
+echo "******************************************"
 
 printf "Checking for bitcoind installation... "
 if [ "$(bitcoind_installed)" = "true" ]; then
@@ -63,6 +83,7 @@ else
     install_bitcoind_from_ppa
 fi
 
+
 # See https://golang.org/dl/ for the latest version of go
 # TODO Test to see if GO v1.11 or higher is installed before downloading
 # TODO Test to see golang 1.11 or higher is in the repositories
@@ -70,12 +91,6 @@ fi
 # TODO Give the option of downloading from the repository or official binaries
 # TODO Put blocks of code into functions
 
-# Download and verify the go language installation file
-GO_FILENAME="go1.11.5.linux-amd64.tar.gz"
-GO_URL="https://dl.google.com/go/"
-GO_FILEURL=$GO_URL/$GO_FILENAME
-GO_HASH=`echo "ff54aafedff961eb94792487e827515da683d61a5f9482f668008832631e5d25"`
-GO_VERSION_STRING="go version go1.11.5 linux/amd64"
 
 download_go() {
     echo Downloading GO... 
