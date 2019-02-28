@@ -105,6 +105,25 @@ install_go () {
     fi
 }
 
+install_lnd () {
+    # Install lnd
+    go get -d github.com/lightningnetwork/lnd
+    cd $GOPATH/src/github.com/lightningnetwork/lnd
+    make && make install
+}
+
+update_lnd () {
+    cd $GOPATH/src/github.com/lightningnetwork/lnd
+    git pull
+    make clean && make && make install
+}
+
+check_lnd () {
+    cd $GOPATH/src/github.com/lightningnetwork/lnd
+    make check
+}
+
+
 # TODO Use the official binaries for installation instead of repositories
 #      Include a hash check. Note that the ppa does not have file for
 #      ubuntu disco prerelease as of 2019-02-26. In this case, using the
@@ -139,6 +158,13 @@ else
     install_go
 fi
 
+if [ true ]; then
+    echo "Installing lnd... "
+    install_lnd
+    update_lnd
+    check_lnd
+fi
+
 # See https://golang.org/dl/ for the latest version of go
 # TODO Test to see if GO v1.11 or higher is installed before downloading
 # TODO Test to see golang 1.11 or higher is in the repositories
@@ -151,4 +177,3 @@ fi
 # TODO Figure out a mechanism to updating the PATH in the bash session
 #      from which the bitcoin script is run.
 # TODO Only print this message if necessary
-echo "Exit this terminal, start a new terminal session, and rerun this script."
