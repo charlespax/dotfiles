@@ -57,6 +57,20 @@ go_installed () {
     fi
 }
 
+download_go() {
+    # Download go
+    echo Downloading GO... 
+    wget -qc --show-progress $GO_FILEURL 
+    HASH="`sha256sum go1.11.5.linux-amd64.tar.gz | awk -F \" \" '{ print $1 }'`"
+    echo Downloading GO... COMPLETE
+    printf "Verifying GO sha256... " 
+    if [ "$HASH" = "$GO_HASH" ]; then
+        echo "PASSED"
+    else
+        echo "ERROR: incorrect sha256 hash"
+        exit 1
+    fi
+}
 
 # TODO Use the official binaries for installation instead of repositories
 #      Include a hash check. Note that the ppa does not have file for
@@ -83,6 +97,14 @@ else
     install_bitcoind_from_ppa
 fi
 
+printf "Checking for go installation... "
+if [ "$(go_installed)" = "true" ]; then
+    echo "INSTALLED"
+else
+    echo "NOT installed"
+    echo "Installing bitcoind from ppa... "
+    download_go
+fi
 
 # See https://golang.org/dl/ for the latest version of go
 # TODO Test to see if GO v1.11 or higher is installed before downloading
@@ -91,20 +113,6 @@ fi
 # TODO Give the option of downloading from the repository or official binaries
 # TODO Put blocks of code into functions
 
-
-download_go() {
-    echo Downloading GO... 
-    wget -qc --show-progress $GO_FILEURL 
-    HASH="`sha256sum go1.11.5.linux-amd64.tar.gz | awk -F \" \" '{ print $1 }'`"
-    echo Downloading GO... COMPLETE
-    printf "Verifying GO sha256... " 
-    if [ "$HASH" = "$GO_HASH" ]; then
-        echo "PASSED"
-    else
-        echo "ERROR: incorrect sha256 hash"
-        exit 1
-    fi
-}
 
 if [ -f $GO_FILENAME ]; then
     echo "$GO_FILENAME found"
