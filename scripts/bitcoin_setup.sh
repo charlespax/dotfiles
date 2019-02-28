@@ -31,18 +31,18 @@ install_bitcoind_from_ppa () {
     sudo apt-get -y install bitcoind bitcoin-qt
     local status="$(command -v bitcoind)"
     if [ "${status##*/}" = "bitcoind" ]; then
-        true
+        return "true"
     else
-        false
+        return "false"
     fi
 }
 
 bitcoind_installed () {
     local status="$(command -v bitcoind)"
     if [ "${status##*/}" = "bitcoind" ]; then
-        true
+        return "true"
     else
-        false
+        return "false"
     fi
 }
 
@@ -55,7 +55,7 @@ install_bitcoind_from_binary () {
 }
 
 printf "Checking for bitcoind installation... "
-if [ -z "$(bitcoind_installed)" ]; then
+if [ "$(bitcoind_installed)" = "true" ]; then
     echo "INSTALLED"
 else
     echo "NOT installed"
