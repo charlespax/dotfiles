@@ -135,7 +135,7 @@ lnd_installed () {
     LND_VERSION_STRING="0.5.0-beta"
     # return "true" if 'lnd' is installed at or above desired version
     # return "false" otherwise
-    if [ "$(LND_VERSION_STRING | cut -d " " -f 3)" = "`command lnd --version`" ]; then
+    if [ "$($LND_VERSION_STRING | cut -d " " -f 3)" = "`command lnd --version`" ]; then
         echo "true"
     else
         echo "false"
