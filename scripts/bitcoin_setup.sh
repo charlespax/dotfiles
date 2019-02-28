@@ -140,7 +140,7 @@ lnd_installed () {
         echo "true"
     fi
 }
-}
+
 install_btcd () {
     # btcd is required for lnd to pass all unit tests. Having btcd installed
     # does not prevent bitcoind from being used.
