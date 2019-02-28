@@ -60,6 +60,11 @@ go_installed () {
 
 download_go() {
     # Download go
+    # See https://golang.org/dl/ for the latest version of go
+    # TODO Test to see if GO v1.11 or higher is installed before downloading
+    # TODO Test to see golang 1.11 or higher is in the repositories
+    #      v1.11 and 1.12 are in ubuntu-19.04 as of 2019-02-26
+    # TODO Give the option of downloading from the repository or official binaries
     echo Downloading GO... 
     wget -qc --show-progress $GO_FILEURL 
     HASH="`sha256sum go1.11.5.linux-amd64.tar.gz | awk -F \" \" '{ print $1 }'`"
@@ -126,15 +131,27 @@ check_lnd () {
     make check
 }
 
+lnd_installed () {
+    # return "true" if 'lnd' is installed at or above desired version
+    # return "false" otherwise
+    if [ "`command lnd --version`" = "lnd: command not found" ]; then
+        echo "false"
+    else
+        echo "true"
+    fi
+}
+}
 install_btcd () {
+    # btcd is required for lnd to pass all unit tests. Having btcd installed
+    # does not prevent bitcoind from being used.
     cd $GOPATH/src/github.com/lightningnetwork/lnd
     make btcd
 }
 
-# TODO Use the official binaries for installation instead of repositories
-#      Include a hash check. Note that the ppa does not have file for
-#      ubuntu disco prerelease as of 2019-02-26. In this case, using the
-#      official binaries would be better.
+# TODO Use the official binaries for installation instead of repositories.
+# Include a hash check. Note that the ppa does not have file for ubuntu
+# disco prerelease as of 2019-02-26. In this case, using the official
+# binaries would be better.
 install_bitcoind_from_binary () {
     :
 }
@@ -165,7 +182,10 @@ else
     install_go
 fi
 
-if [ true ]; then
+printf "Checking for go installation... "
+if [ "$(lnd_installed)" = "true" ]; then
+    echo "INSTALLED"
+else
     echo "Installing lnd... "
     install_lnd
     update_lnd
@@ -174,15 +194,6 @@ if [ true ]; then
 fi
 
 echo "Installation complete. Run 'source ~/.bashrc' to update this terminal session."
-
-# See https://golang.org/dl/ for the latest version of go
-# TODO Test to see if GO v1.11 or higher is installed before downloading
-# TODO Test to see golang 1.11 or higher is in the repositories
-#      v1.11 and 1.12 are in ubuntu-19.04 as of 2019-02-26
-# TODO Give the option of downloading from the repository or official binaries
-# TODO Put blocks of code into functions
-
-
 
 # TODO Figure out a mechanism to updating the PATH in the bash session
 #      from which the bitcoin script is run.
