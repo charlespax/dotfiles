@@ -31,6 +31,15 @@ install_bitcoind_from_ppa () {
     fi
 }
 
+bitcoind_installed () {
+    local status="$(command -v bitcoind)"
+    if [ "${status##*/}" = "bitcoind" ]; then
+        true
+    else
+        false
+    fi
+}
+
 # TODO Use the official binaries for installation instead of repositories
 #      Include a hash check. Note that the ppa does not have file for
 #      ubuntu disco prerelease as of 2019-02-26. In this case, using the
@@ -38,15 +47,14 @@ install_bitcoind_from_ppa () {
 install_bitcoind_from_binary () {
     :
 }
+
 printf "Checking for bitcoind installation... "
-INSTALLED="$(command -v bitcoind)"
-if [ "${INSTALLED##*/}" = "bitcoind" ]; then
+if [ bitcoind_installed = true ]; then
     echo "INSTALLED"
 else
     echo "NOT installed"
     echo "Installing bitcoind from ppa... "
     install_bitcoind_from_ppa
-    echo $result
 fi
 
 # See https://golang.org/dl/ for the latest version of go
