@@ -134,10 +134,10 @@ check_lnd () {
 lnd_installed () {
     # TODO Make the version string check better. Just make sure the check
     # returns a version number and not an error.
-    LND_VERSION_STRING="0.5.0-beta"
+    local LND_VERSION_STRING="0.5.2-99-beta"
     # return "true" if 'lnd' is installed at or above desired version
     # return "false" otherwise
-    if [ "$(echo $LND_VERSION_STRING | cut -d " " -f 3)" = "`command lnd --version`" ]; then
+    if [ "$(echo $LND_VERSION_STRING | cut -d ' ' -f 3)" = "$(command lnd --version | cut -d ' ' -f 3)" ]; then
         echo "true"
     else
         echo "false"
@@ -188,16 +188,17 @@ fi
 printf "Checking for lnd installation... "
 if [ "$(lnd_installed)" = "true" ]; then
     echo "INSTALLED"
-    echo "Updating lnd... "
+    printf "Updating lnd... "
     update_lnd
     install_btcd
 else
+    echo "NOT INSTALLED"
     echo "Installing lnd... "
     echo "This may take several minutes"
     install_lnd
     update_lnd
     install_btcd
-    check_lnd
+#    check_lnd
 fi
 
 echo "Installation complete. Run 'source ~/.bashrc' to update this terminal session."
