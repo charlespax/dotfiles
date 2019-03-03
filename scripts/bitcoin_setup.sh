@@ -15,14 +15,31 @@ GO_HASH=`echo "ff54aafedff961eb94792487e827515da683d61a5f9482f668008832631e5d25"
 GO_URL="https://dl.google.com/go/"
 GO_FILEURL=$GO_URL/$GO_FILENAME
 GO_VERSION_STRING="go version go1.11.5 linux/amd64"
-
+LND_VERSION_STRING="0.5.2-99-beta"
+ARCHITECTURE=$(uname -p)
+TESTTEST="TESTTEST"
 source ~/.bashrc
 
-# TODO Support i386
+# TODO Support i386, use $(uname -p) to get processor type
 # TODO Support ARM
 # TODO Determine bitcoind installed version
 # TODO Keep a set of variables to store the status of each installation
 # TODO Print a status report at the end of the script
+
+arch_setup () {
+    if [ "$(uname -p)" = "x86_64" ]; then
+        echo "Arch is $(uname -p)"
+        TESTTEST="HELLOTEST"
+    elif [ "$(uname -p)" = "i686" ]; then
+        echo "Arch is $(uname -p)"
+    else
+        echo "Arch is $(uname -p)"
+    fi
+}
+
+echo "$(arch_setup)"
+echo $TESTTEST
+
 
 install_bitcoind_from_ppa () {
     # Attempt to install bitcoind
@@ -134,7 +151,6 @@ check_lnd () {
 lnd_installed () {
     # TODO Make the version string check better. Just make sure the check
     # returns a version number and not an error.
-    local LND_VERSION_STRING="0.5.2-99-beta"
     # return "true" if 'lnd' is installed at or above desired version
     # return "false" otherwise
     if [ "$(echo $LND_VERSION_STRING | cut -d ' ' -f 3)" = "$(command lnd --version | cut -d ' ' -f 3)" ]; then
