@@ -37,10 +37,6 @@ else
     echo "Arch is $(uname -p)"
 fi
 
-echo "$(arch_setup)"
-echo $TESTTEST
-
-
 install_bitcoind_from_ppa () {
     # Attempt to install bitcoind
     sudo apt-add-repository -y ppa:bitcoin/bitcoin
@@ -84,7 +80,7 @@ download_go() {
     # TODO Give the option of downloading from the repository or official binaries
     echo Downloading GO... 
     wget -qc --show-progress $GO_FILEURL 
-    HASH="`sha256sum go1.11.5.linux-amd64.tar.gz | awk -F \" \" '{ print $1 }'`"
+    HASH="`sha256sum $GO_FILENAME | awk -F \" \" '{ print $1 }'`"
     echo Downloading GO... COMPLETE
     printf "Verifying GO sha256... " 
     if [ "$HASH" = "$GO_HASH" ]; then
