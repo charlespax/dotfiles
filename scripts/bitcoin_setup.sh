@@ -9,15 +9,6 @@
 # This installation process is taken from
 # https://github.com/lightningnetwork/lnd/blob/master/docs/INSTALL.md
 
-# Global variables
-GO_FILENAME="go1.11.5.linux-amd64.tar.gz"
-GO_HASH=`echo "ff54aafedff961eb94792487e827515da683d61a5f9482f668008832631e5d25"`
-GO_URL="https://dl.google.com/go/"
-GO_FILEURL=$GO_URL/$GO_FILENAME
-GO_VERSION_STRING="go version go1.11.5 linux/amd64"
-LND_VERSION_STRING="0.5.2-99-beta"
-ARCHITECTURE=$(uname -p)
-TESTTEST="TESTTEST"
 source ~/.bashrc
 
 # TODO Support i386, use $(uname -p) to get processor type
@@ -26,16 +17,25 @@ source ~/.bashrc
 # TODO Keep a set of variables to store the status of each installation
 # TODO Print a status report at the end of the script
 
-arch_setup () {
-    if [ "$(uname -p)" = "x86_64" ]; then
-        echo "Arch is $(uname -p)"
-        TESTTEST="HELLOTEST"
-    elif [ "$(uname -p)" = "i686" ]; then
-        echo "Arch is $(uname -p)"
-    else
-        echo "Arch is $(uname -p)"
-    fi
-}
+if [ "$(uname -p)" = "x86_64" ]; then
+    # 64-bit values
+    GO_FILENAME="go1.11.5.linux-amd64.tar.gz"
+    GO_HASH=`echo "ff54aafedff961eb94792487e827515da683d61a5f9482f668008832631e5d25"`
+    GO_URL="https://dl.google.com/go/"
+    GO_FILEURL=$GO_URL/$GO_FILENAME
+    GO_VERSION_STRING="go version go1.11.5 linux/amd64"
+    LND_VERSION_STRING="0.5.2-99-beta"
+elif [ "$(uname -p)" = "i686" ]; then
+    # 32-bit values
+    GO_FILENAME="go1.11.5.linux-386.tar.gz"
+    GO_HASH=`echo "acd8e05f8d3eed406e09bb58eab89de3f0a139d4aef15f74adeed2d2c24cb440"`
+    GO_URL="https://dl.google.com/go/"
+    GO_FILEURL=$GO_URL/$GO_FILENAME
+    GO_VERSION_STRING="go version go1.11.5 linux/386"
+    LND_VERSION_STRING="0.5.2-99-beta"
+else
+    echo "Arch is $(uname -p)"
+fi
 
 echo "$(arch_setup)"
 echo $TESTTEST
