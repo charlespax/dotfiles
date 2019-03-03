@@ -16,6 +16,8 @@ source ~/.bashrc
 # TODO Determine bitcoind installed version
 # TODO Keep a set of variables to store the status of each installation
 # TODO Print a status report at the end of the script
+# TODO Install prerequsits: make. Maybe just $(sudo apt-get install build-essential)
+
 
 if [ "$(uname -p)" = "x86_64" ]; then
     # 64-bit values
