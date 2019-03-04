@@ -16,7 +16,7 @@ source ~/.bashrc
 # TODO Keep a set of variables to store the status of each installation
 # TODO Print a status report at the end of the script
 # TODO Install prerequsits: make. Maybe just $(sudo apt-get install build-essential)
-# TODO Implement bitcoin-core file hash check
+# TODO Install via binar file
 # TODO Give user configuration options (e.g. bitcoind or btcd?)
 # TODO Add argument functionality to this script:
 #   -h, --help             Print this message
@@ -28,7 +28,7 @@ source ~/.bashrc
 
 # Set architecture-independent variables
 LND_VERSION_STRING="0.5.2-99-beta"
-
+BITCOIN_CORE_VERSION="0.17.1"
 # Set architecture-dependent variables
 if [ "$(uname -p)" = "x86_64" ]; then
     GO_FILENAME="go1.11.5.linux-amd64.tar.gz"
@@ -36,18 +36,24 @@ if [ "$(uname -p)" = "x86_64" ]; then
     GO_URL="https://dl.google.com/go/"
     GO_FILEURL=$GO_URL/$GO_FILENAME
     GO_VERSION_STRING="go version go1.11.5 linux/amd64"
-    BITCOIN_CORE_FILE_URL="https://bitcoin.org/bin/bitcoin-core-0.17.1/bitcoin-0.17.1-x86_64-linux-gnu.tar.gz"
+    BITCOIN_CORE_FILENAME="bitcoin-$BITCOIN_CORE_VERSION-x86_64-linux-gnu.tar.gz"
+    BITCOIN_CORE_FILE_URL="https://bitcoin.org/bin/bitcoin-core-$BITCOIN_CORE_VERSION/$BITCOIN_CORE_FILENAME"
+    BITCOIN_CORE_HASH=`echo "53ffca45809127c9ba33ce0080558634101ec49de5224b2998c489b6d0fc2b17"`
 elif [ "$(uname -p)" = "i686" ]; then
     GO_FILENAME="go1.11.5.linux-386.tar.gz"
     GO_HASH=`echo "acd8e05f8d3eed406e09bb58eab89de3f0a139d4aef15f74adeed2d2c24cb440"`
     GO_URL="https://dl.google.com/go/"
     GO_FILEURL=$GO_URL/$GO_FILENAME
     GO_VERSION_STRING="go version go1.11.5 linux/386"
-    BITCOIN_CORE_FILE_URL="https://bitcoin.org/bin/bitcoin-core-0.17.1/bitcoin-0.17.1-i686-pc-linux-gnu.tar.gz"
+    BITCOIN_CORE_FILENAME="bitcoin-$BITCOIN_CORE_VERSION-i686-pc-linux-gnu.tar.gz"
+    BITCOIN_CORE_FILE_URL="https://bitcoin.org/bin/bitcoin-core-$BITCOIN_CORE_VERSION/$BITCOIN_CORE_FILENAME"
+    BITCOIN_CORE_HASH=`echo "b1e1dcf8265521fef9021a9d49d8661833e3f844ca9a410a9dd12a617553dda1"`
 else
     echo "Arch is $(uname -p)"
-    # BITCOIN_CORE_FILE_URL="https://bitcoin.org/bin/bitcoin-core-0.17.1/bitcoin-0.17.1-aarch64-linux-gnu.tar.gz"
-    # BITCOIN_CORE_FILE_URL="https://bitcoin.org/bin/bitcoin-core-0.17.1/bitcoin-0.17.1-arm-linux-gnueabihf.tar.gz"
+    # BITCOIN_CORE_FILE_URL="https://bitcoin.org/bin/bitcoin-core-$BITCOIN_CORE_VERSION/bitcoin-$BITCOIN_CORE_VERSION-aarch64-linux-gnu.tar.gz"
+    # BITCOIN_CORE_HASH=`echo "5659c436ca92eed8ef42d5b2d162ff6283feba220748f9a373a5a53968975e34`"
+    # BITCOIN_CORE_FILE_URL="https://bitcoin.org/bin/bitcoin-core-$BITCOIN_CORE_VERSION/bitcoin-$BITCOIN_CORE_VERSION-arm-linux-gnueabihf.tar.gz"
+    # BITCOIN_CORE_HASH=`echo "aab3c1fb92e47734fadded1d3f9ccf0ac5a59e3cdc28c43a52fcab9f0cb395bc`"
 fi
 
 install_bitcoind_from_ppa () {
@@ -67,8 +73,18 @@ install_bitcoind_from_ppa () {
 # Include a hash check. Note that the ppa does not have file for ubuntu
 # disco prerelease as of 2019-02-26. In this case, using the official
 # binaries would be better.
-install_bitcoind_from_binary () {
-    :
+install_bitcoin_from_binary () {
+    printf "Downloading Bitcoin Core... "
+    wget -qc --show-progress $BITCOIN_CORE_FILE_URL 
+    HASH="`sha256sum $BITCOIN_CORE_FILENAME | awk -F \" \" '{ print $1 }'`"
+    echo COMPLETE
+    printf "Verifying Bitcoin Core sha256... " 
+    if [ "$HASH" = "$BITCOIN_CORE_HASH" ]; then
+        echo "PASSED"
+    else
+        echo "ERROR: incorrect sha256 hash"
+        exit 1
+    fi
 }
 
 bitcoind_installed () {
@@ -156,8 +172,11 @@ install_lnd () {
 
 update_lnd () {
     cd $GOPATH/src/github.com/lightningnetwork/lnd
-    git pull
-    make clean && make && make install
+    if [ "$(git pull | tail -n 1)" = "Already up to date." ]; then
+        echo "Already up to date."
+    else
+        make clean && make && make install
+    fi
 }
 
 check_lnd () {
@@ -198,6 +217,8 @@ if [ "$(bitcoind_installed)" = "true" ]; then
     echo "INSTALLED"
 else
     echo "NOT installed"
+    # echo "Installing bitcoind from binary... "
+    # install_bitcoind_from_binary
     echo "Installing bitcoind from ppa... "
     install_bitcoind_from_ppa
 fi
@@ -216,15 +237,21 @@ if [ "$(lnd_installed)" = "true" ]; then
     echo "INSTALLED"
     printf "Updating lnd... "
     update_lnd
-    install_btcd
 else
     echo "NOT INSTALLED"
     echo "Installing lnd... "
     echo "This may take several minutes"
+    # TODO Make install_lnd output information to the terminal
     install_lnd
     update_lnd
-    install_btcd
 #    check_lnd
+fi
+
+printf "Checking btcd installation... "
+if [ "$(command btcd --version)" = "btcd version 0.12.0-beta" ]; then
+    echo "INSTALLED"
+else
+    install_btcd
 fi
 
 echo "Installation complete. Run 'source ~/.bashrc' to update this terminal session."
