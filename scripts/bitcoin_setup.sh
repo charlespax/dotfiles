@@ -11,13 +11,20 @@
 
 source ~/.bashrc
 
-# TODO Support ARM
+# TODO Support ARM 32-bit and 64-bit
 # TODO Determine bitcoind installed version
 # TODO Keep a set of variables to store the status of each installation
 # TODO Print a status report at the end of the script
 # TODO Install prerequsits: make. Maybe just $(sudo apt-get install build-essential)
 # TODO Implement bitcoin-core file hash check
 # TODO Give user configuration options (e.g. bitcoind or btcd?)
+# TODO Add argument functionality to this script:
+#   -h, --help             Print this message
+#   -b, --bitcoin-daemon   Select which Bitcoin daemon to use
+#                          Options are bitcoind or btcd
+#       --bitcoin-source   Install Bitcoin daemon from source rather than repository
+#   -g, --go-version       State which version of go to use
+#       --go-source        Install GO from source rather than repository
 
 # Set architecture-independent variables
 LND_VERSION_STRING="0.5.2-99-beta"
