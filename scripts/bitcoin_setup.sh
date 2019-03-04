@@ -11,32 +11,36 @@
 
 source ~/.bashrc
 
-# TODO Support i386, use $(uname -p) to get processor type
 # TODO Support ARM
 # TODO Determine bitcoind installed version
 # TODO Keep a set of variables to store the status of each installation
 # TODO Print a status report at the end of the script
 # TODO Install prerequsits: make. Maybe just $(sudo apt-get install build-essential)
+# TODO Implement bitcoin-core file hash check
+# TODO Give user configuration options (e.g. bitcoind or btcd?)
 
+# Set architecture-independent variables
+LND_VERSION_STRING="0.5.2-99-beta"
 
+# Set architecture-dependent variables
 if [ "$(uname -p)" = "x86_64" ]; then
-    # 64-bit values
     GO_FILENAME="go1.11.5.linux-amd64.tar.gz"
     GO_HASH=`echo "ff54aafedff961eb94792487e827515da683d61a5f9482f668008832631e5d25"`
     GO_URL="https://dl.google.com/go/"
     GO_FILEURL=$GO_URL/$GO_FILENAME
     GO_VERSION_STRING="go version go1.11.5 linux/amd64"
-    LND_VERSION_STRING="0.5.2-99-beta"
+    BITCOIN_CORE_FILE_URL="https://bitcoin.org/bin/bitcoin-core-0.17.1/bitcoin-0.17.1-x86_64-linux-gnu.tar.gz"
 elif [ "$(uname -p)" = "i686" ]; then
-    # 32-bit values
     GO_FILENAME="go1.11.5.linux-386.tar.gz"
     GO_HASH=`echo "acd8e05f8d3eed406e09bb58eab89de3f0a139d4aef15f74adeed2d2c24cb440"`
     GO_URL="https://dl.google.com/go/"
     GO_FILEURL=$GO_URL/$GO_FILENAME
     GO_VERSION_STRING="go version go1.11.5 linux/386"
-    LND_VERSION_STRING="0.5.2-99-beta"
+    BITCOIN_CORE_FILE_URL="https://bitcoin.org/bin/bitcoin-core-0.17.1/bitcoin-0.17.1-i686-pc-linux-gnu.tar.gz"
 else
     echo "Arch is $(uname -p)"
+    # BITCOIN_CORE_FILE_URL="https://bitcoin.org/bin/bitcoin-core-0.17.1/bitcoin-0.17.1-aarch64-linux-gnu.tar.gz"
+    # BITCOIN_CORE_FILE_URL="https://bitcoin.org/bin/bitcoin-core-0.17.1/bitcoin-0.17.1-arm-linux-gnueabihf.tar.gz"
 fi
 
 install_bitcoind_from_ppa () {
@@ -50,6 +54,14 @@ install_bitcoind_from_ppa () {
     else
         echo "Installing bitcoind from ppa... ERROR"
     fi
+}
+
+# TODO Use the official binaries for installation instead of repositories.
+# Include a hash check. Note that the ppa does not have file for ubuntu
+# disco prerelease as of 2019-02-26. In this case, using the official
+# binaries would be better.
+install_bitcoind_from_binary () {
+    :
 }
 
 bitcoind_installed () {
@@ -165,13 +177,6 @@ install_btcd () {
     make btcd
 }
 
-# TODO Use the official binaries for installation instead of repositories.
-# Include a hash check. Note that the ppa does not have file for ubuntu
-# disco prerelease as of 2019-02-26. In this case, using the official
-# binaries would be better.
-install_bitcoind_from_binary () {
-    :
-}
 
 echo "******************************************"
 echo "******************************************"
