@@ -1,5 +1,6 @@
 #!/bin/bash
 
+LODEKEY_VERSION="2019.03.04"
 # Tested on lubuntu 18.10
 # # Connect to wifi
 # # git is already installed
@@ -11,8 +12,12 @@
 
 source ~/.bashrc
 
+# TODO Check the operating system. The Bitcoin repository does not have packages for i386 CPUs
+# for some realeases.
 # TODO Support ARM 32-bit and 64-bit
 # TODO Determine bitcoind installed version
+# TODO Figure out a mechanism to updating the PATH in the bash session
+#      from which the bitcoin script is run.
 # TODO Keep a set of variables to store the status of each installation
 # TODO Print a status report at the end of the script
 # TODO Install prerequsits: make. Maybe just $(sudo apt-get install build-essential)
@@ -56,6 +61,17 @@ else
     # BITCOIN_CORE_HASH=`echo "aab3c1fb92e47734fadded1d3f9ccf0ac5a59e3cdc28c43a52fcab9f0cb395bc`"
 fi
 
+bitcoind_installed () {
+    # return "true" if bitcoind is installed
+    # return "false" otherwise
+    local status="$(command -v bitcoind)"
+    if [ "${status##*/}" = "bitcoind" ]; then
+        echo "true"
+    else
+        echo "false"
+    fi
+}
+
 install_bitcoind_from_ppa () {
     # Attempt to install bitcoind
     sudo apt-add-repository -y ppa:bitcoin/bitcoin
@@ -73,11 +89,11 @@ install_bitcoind_from_ppa () {
 # Include a hash check. Note that the ppa does not have file for ubuntu
 # disco prerelease as of 2019-02-26. In this case, using the official
 # binaries would be better.
-install_bitcoin_from_binary () {
+install_bitcoind_from_binary () {
     printf "Downloading Bitcoin Core... "
     wget -qc --show-progress $BITCOIN_CORE_FILE_URL 
     HASH="`sha256sum $BITCOIN_CORE_FILENAME | awk -F \" \" '{ print $1 }'`"
-    echo COMPLETE
+    echo "COMPLETE"
     printf "Verifying Bitcoin Core sha256... " 
     if [ "$HASH" = "$BITCOIN_CORE_HASH" ]; then
         echo "PASSED"
@@ -85,16 +101,13 @@ install_bitcoin_from_binary () {
         echo "ERROR: incorrect sha256 hash"
         exit 1
     fi
-}
-
-bitcoind_installed () {
-    # return "true" if bitcoind is installed
-    # return "false" otherwise
-    local status="$(command -v bitcoind)"
-    if [ "${status##*/}" = "bitcoind" ]; then
-        echo "true"
+    echo "Installing bitcoin-$BITCOIN_CORE_VERSION... "
+    tar xzf $BITCOIN_CORE_FILENAME
+    sudo install -m 0755 -o root -g root -t /usr/local/bin bitcoin-$BITCOIN_CORE_VERSION/bin/*
+    if [ "$(bitcoind_installed)" = "true" ]; then
+        echo "INSTALLED"
     else
-        echo "false"
+        echo "Some kind of error"
     fi
 }
 
@@ -203,24 +216,38 @@ install_btcd () {
     make btcd
 }
 
+print_welcome () {
+    # TODO DO not print welcome screen if -q argument is given
+    echo ""
+    echo "██╗      ██████╗ ██████╗ ███████╗██╗  ██╗███████╗██╗   ██╗"
+    echo "██║     ██╔═══██╗██╔══██╗██╔════╝██║ ██╔╝██╔════╝╚██╗ ██╔╝"
+    echo "██║     ██║   ██║██║  ██║█████╗  █████╔╝ █████╗   ╚████╔╝"
+    echo "██║     ██║   ██║██║  ██║██╔══╝  ██╔═██╗ ██╔══╝    ╚██╔╝"
+    echo "███████╗╚██████╔╝██████╔╝███████╗██║  ██╗███████╗   ██║"
+    echo "╚══════╝ ╚═════╝ ╚═════╝ ╚══════╝╚═╝  ╚═╝╚══════╝   ╚═╝"
+    echo "Bitcoin Lightning node helper        version $LODEKEY_VERSION"
+    echo "  by Pax-o-tron"
+    echo ""
+}
 
-echo "******************************************"
-echo "******************************************"
-echo "***                                    ***"
-echo "***     Installing Lightning Node      ***"
-echo "***                                    ***"
-echo "******************************************"
-echo "******************************************"
+print_welcome
+
+read -p "Continue? (Y/n): ";
+if [ "$REPLY" = "n" ]; then
+    exit
+else
+    continue
+fi
 
 printf "Checking for bitcoind installation... "
 if [ "$(bitcoind_installed)" = "true" ]; then
     echo "INSTALLED"
 else
     echo "NOT installed"
-    # echo "Installing bitcoind from binary... "
-    # install_bitcoind_from_binary
-    echo "Installing bitcoind from ppa... "
-    install_bitcoind_from_ppa
+    echo "Installing bitcoind from binary... "
+    install_bitcoind_from_binary
+    # echo "Installing bitcoind from ppa... "
+    # install_bitcoind_from_ppa
 fi
 
 printf "Checking for go installation... "
@@ -256,5 +283,3 @@ fi
 
 echo "Installation complete. Run 'source ~/.bashrc' to update this terminal session."
 
-# TODO Figure out a mechanism to updating the PATH in the bash session
-#      from which the bitcoin script is run.
