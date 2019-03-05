@@ -15,6 +15,7 @@ source ~/.bashrc
 # TODO Check the operating system. The Bitcoin repository does not have packages for i386 CPUs
 # for some realeases.
 # TODO Support ARM 32-bit and 64-bit
+# TODO Use 'dialog' to get graphical input
 # TODO Determine bitcoind installed version
 # TODO Figure out a mechanism to updating the PATH in the bash session
 #      from which the bitcoin script is run.
@@ -228,6 +229,7 @@ print_welcome () {
     echo "Bitcoin Lightning node helper        version $LODEKEY_VERSION"
     echo "  by Pax-o-tron"
     echo ""
+    # Created with http://patorjk.com/software/taag/#p=display&h=0&v=0&f=ANSI%20Shadow&t=LodeKey
 }
 
 print_welcome
