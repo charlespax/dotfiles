@@ -14,6 +14,9 @@ alias ls='ls -GFh'
 # Get weather reports
 alias weather='curl wttr.in/?n?p?2'
 
+# update system
+alias update="echo 'Updating system via apt-get'; sudo apt-get update; sudo apt-get dist-upgrade; sudo apt-get autoremove"
+
 # set PATH to include a ~/bin/ directory
 if [ -d "$HOME/bin" ]; then
     PATH="$HOME/bin:$PATH"
@@ -31,3 +34,6 @@ export OPENCM3_DIR=~/lib/libopencm3/
 export PATH="/opt/local/bin:/opt/local/sbin:$PATH"
 # Finished adapting your PATH environment variable for use with MacPorts.
 
+export PATH=/opt/local/bin:/opt/local/sbin:/opt/local/bin:/opt/local/sbin:/opt/local/bin:/opt/local/sbin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin:/home/charles/gocode/bin:/home/charles/gocode/bin:/home/charles/gocode/bin:/usr/local/go/bin:/home/charles/gocode/bin:/usr/local/go/bin
+export GOPATH=~/gocode
+export PATH=$PATH:$GOPATH/bin
