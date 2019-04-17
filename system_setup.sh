@@ -19,6 +19,7 @@ sudo apt-get install vim
 sudo apt-get install git
 git config --global user.email "charles.pax@gmail.com"
 git config --global user.name "Charles Edward Pax"
+git config --global push.default simple
 git config --global diff.tool vimdiff
 git config --global difftool.prompt false
 git config --global alias.d difftool
@@ -36,6 +37,7 @@ sudo add-apt-repository ppa:teejee2008/ppa
 sudo apt-get update
 sudo apt-get install ukuu
 # Timeshift backup system
+# Note necessary after Linux Mint includes one by default
 sudo apt-get install timeshift
 # Backintime backup system
 sudo add-apt-repository ppa:bit-team/testing
