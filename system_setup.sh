@@ -37,6 +37,10 @@ sudo apt-get update
 sudo apt-get install ukuu
 # Timeshift backup system
 sudo apt-get install timeshift
+# Backintime backup system
+sudo add-apt-repository ppa:bit-team/testing
+sudo apt-get update
+sudo apt-get install backintime-qt
 
 ## Applications
 # Chromium browser

@@ -11,6 +11,9 @@ export LSCOLORS=GxFxCxDxBxegedabagaced
 # Give some default flags to ls
 alias ls='ls -GFh'
 
+# Make dmesg better
+alias dmesg='dmesg -wH'
+
 # Get weather reports
 alias weather='curl wttr.in/?n?p?2'
 
