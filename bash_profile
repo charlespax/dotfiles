@@ -11,6 +11,9 @@ export LSCOLORS=GxFxCxDxBxegedabagaced
 # Give some default flags to ls
 alias ls='ls -GFh'
 
+# Make axel better
+alias axel='axel -a'
+
 # Make dmesg better
 alias dmesg='dmesg -wH'
 

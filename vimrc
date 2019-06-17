@@ -3,9 +3,6 @@
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 set nocompatible
 
-" Save and run opened file
-map <F2> <Esc>:w<CR>:!%:p<CR>  
-
 " Save and run opened file. :S escapes spaces in the execution path
 map <F2> <Esc>:w<CR>:!%:p:S<CR>
 set visualbell
@@ -227,8 +224,8 @@ set shiftwidth=4
 set tabstop=4
 
 " Linebreak on 500 characters
-set lbr
-set tw=500
+"set lbr
+"set tw=500
 
 set ai "Auto indent
 set si "Smart indent
