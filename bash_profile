@@ -8,6 +8,9 @@ export PS1="\[\033[36m\]\u\[\033[m\]@\[\033[32m\]\h:\[\033[33;1m\]\w\[\033[m\]\$
 export CLICOLOR=1
 export LSCOLORS=GxFxCxDxBxegedabagaced
 
+# Print command
+alias prt='lp -o media=a4 -o cpi=12 -o lpi=7.2 -o page-left=48 -o page-right=48 -o page-top=48 -o page-bottom=48 < '
+
 # Give some default flags to ls
 alias ls='ls -GFh'
 
