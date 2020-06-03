@@ -23,6 +23,9 @@ alias dmesg='dmesg -wH'
 # Get weather reports
 alias weather='curl wttr.in/?n?p?2'
 
+# Improved bc calculator
+alias bc='bc -lq'
+
 # update system
 alias update="echo 'Updating system via apt-get'; sudo apt-get update; sudo apt-get dist-upgrade; sudo apt-get autoremove"
 
