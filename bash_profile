@@ -58,7 +58,6 @@ fi
 export GOPATH=~/gocode
 export PATH=$PATH:$GOPATH/bin
 
-
 # Export the opencm3 directory
 export OPENCM3_DIR=~/lib/libopencm3/
 
