@@ -25,7 +25,7 @@ nmap k gk
 " zM - Folds all blocks
 " zR - Unforlds all blocks
 " More info: http://vim.wikia.com/wiki/Folding
-set foldmethod=syntax
+set foldmethod=indent   
 set foldnestmax=10
 set nofoldenable
 set foldlevel=2
