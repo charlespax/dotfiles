@@ -11,6 +11,23 @@ export LSCOLORS=GxFxCxDxBxegedabagaced
 # Print command
 alias prt='lp -o media=a4 -o cpi=12 -o lpi=7.2 -o page-left=48 -o page-right=48 -o page-top=48 -o page-bottom=48 < '
 
+# WordGrinder alias
+# Description: Shortens the wordgrinder command
+alias wg=wordgrinder
+
+# Convert Wordgrinder files to PDF
+# Requirements: libreoffice
+# Usage: wgprint <filename>
+# Example: wgpring myFile.wg
+wgprint() {
+    local wgFile="$1"
+    wordgrinder -c $wgFile tempWGFile.odt
+    libreoffice --convert-to pdf tempWGFile.odt
+
+    prt tempWGFile.pdf
+    rm tempWGFile.odt tempWGFile.pdf
+}
+
 # Give some default flags to ls
 alias ls='ls -GFh'
 
@@ -38,6 +55,8 @@ fi
 export GOPATH=~/gocode
 export PATH=$PATH:$GOPATH/bin
 
+# Export path for PlatformIO on Visual Studio Code
+export PATH=$PATH:~/.platformio/penv/bin
 
 # Export the opencm3 directory
 export OPENCM3_DIR=~/lib/libopencm3/
