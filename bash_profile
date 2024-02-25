@@ -6,13 +6,21 @@
 # Command aliases #
 # ================#
 
+# Command: halp
+# Description: Print help message for this file
+alias halp="echo '\
+prt <file>          - Print text file to default printer \n
+wg                        - wordgrinder \n
+'"
+
 # Command: prt
 # Description: Print text file to default printer.
 # Usage: prt <file>
 alias prt='lp -o media=a4 -o cpi=12 -o lpi=7.2 -o page-left=48 -o page-right=48 -o page-top=48 -o page-bottom=48 < '
 
-# WordGrinder alias
+# Command: wg
 # Description: Shortens the wordgrinder command
+# Usage: wg
 alias wg=wordgrinder
 
 # Convert Wordgrinder files to PDF
@@ -36,6 +44,11 @@ wgprint() {
 #              -h    print human-readable file sixes
 # Usage: ls
 alias ls='ls -GFh'
+
+# Command: diff
+# Description: Make diff better
+# Usage: diff
+alias diff='diff --color'
 
 # Command: axel
 # Description: Make axel better
