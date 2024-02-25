@@ -16,7 +16,8 @@ set cursorline
 set colorcolumn=80
 " This line is repeated at the end of this file because this settings gets
 " stomped on by something else below this line
-highlight ColorColumn ctermbg=Black
+" Use 'help cterm' for a list of colors
+highlight ColorColumn ctermbg=DarkGray
 
 " :help always opens help in a new tab
 cabbrev help tab help
@@ -466,4 +467,4 @@ endfunction
 "endif
 
 
-highlight ColorColumn ctermbg=Black
+highlight ColorColumn ctermbg=DarkGray
