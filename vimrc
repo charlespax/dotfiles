@@ -6,14 +6,20 @@ set nocompatible
 " Save and run opened file. :S escapes spaces in the execution path
 map <F2> <Esc>:w<CR>:!%:p:S<CR>
 set visualbell
-set relativenumber
+" set relativenumber
 set number
 
 " Displays a horizontal line at the cursor 
 set cursorline
 
+" set color column
+set colorcolumn=80
+" This line is repeated at the end of this file because this settings gets
+" stomped on by something else below this line
+highlight ColorColumn ctermbg=Black
+
 " :help always opens help in a new tab
-:cabbrev help tab help
+cabbrev help tab help
 vmap j gj
 vmap k gk
 nmap j gj
@@ -90,8 +96,8 @@ set autoread
 
 " With a map leader it's possible to do extra key combinations
 " like <leader>w saves the current file
-let mapleader = ","
-let g:mapleader = ","
+let mapleader = "\\"
+let g:mapleader = "\\"
 
 " Fast saving
 nmap <leader>w :w!<cr>
@@ -458,3 +464,6 @@ endfunction
 " if has("autocmd")
 "   au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
 "endif
+
+
+highlight ColorColumn ctermbg=Black
