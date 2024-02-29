@@ -6,18 +6,20 @@ set nocompatible
 " Save and run opened file. :S escapes spaces in the execution path
 map <F2> <Esc>:w<CR>:!%:p:S<CR>
 set visualbell
+set number " enable line numbers
 " set relativenumber
-set number
 
 " Displays a horizontal line at the cursor 
 set cursorline
+highlight CursorLine ctermbg=234
+"highlight Cursor ctermfg=White ctermbg=Yellow cterm=bold guifg=white guibg=yellow gui=bold
 
 " set color column
 set colorcolumn=80
 " This line is repeated at the end of this file because this settings gets
 " stomped on by something else below this line
 " Use 'help cterm' for a list of colors
-highlight ColorColumn ctermbg=DarkGray
+highlight ColorColumn ctermbg=234
 
 " :help always opens help in a new tab
 cabbrev help tab help
@@ -467,4 +469,5 @@ endfunction
 "endif
 
 
-highlight ColorColumn ctermbg=DarkGray
+highlight ColorColumn ctermbg=234
+highlight CursorLine ctermbg=234

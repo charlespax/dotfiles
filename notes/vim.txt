@@ -1,0 +1,17 @@
+
+
+*
+* Useful Commands
+*
+:ijump <func name>      jump to named function
+
+*                       highlight all ocurances of the word or function 
+                        under the cursor
+
+:noh                    remove highlighting
+
+
+*
+* Leader commands (\)
+*
+<leader>w               write file
