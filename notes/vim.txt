@@ -1,17 +1,14 @@
 
 
-*
-* Useful Commands
-*
-:ijump <func name>      jump to named function
+  *                     highlight all ocurances of word under cursor
 
-*                       highlight all ocurances of the word or function 
-                        under the cursor
-
-:noh                    remove highlighting
+  :noh                  remove highlighting
 
 
-*
-* Leader commands (\)
-*
-<leader>w               write file
+=== Cursor Movement ===
+  :ijump <func name>    jump to named function
+  zc                    fold code block
+  zo                    unfold code block
+
+=== File Control ===
+  <leader> w            write file

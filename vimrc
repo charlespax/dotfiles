@@ -1,6 +1,8 @@
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Personal
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+command Hello echo "Hello, world!"
+
 set nocompatible
 
 " Save and run opened file. :S escapes spaces in the execution path
@@ -117,7 +119,10 @@ command W w !sudo tee % > /dev/null
 set number
 
 " Set 7 lines to the cursor - when moving vertically using j/k
-set so=7
+set scrolloff=999
+":nnoremap j jzz
+":nnoremap k kzz
+
 
 " Avoid garbled characters in Chinese language windows OS
 let $LANG='en' 
@@ -462,11 +467,6 @@ function! <SID>BufcloseCloseIt()
      execute("bdelete! ".l:currentBufNum)
    endif
 endfunction
-
-" Make VIM remember position in file after reopen
-" if has("autocmd")
-"   au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
-"endif
 
 
 highlight ColorColumn ctermbg=234
