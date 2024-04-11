@@ -1,4 +1,0 @@
-GDB Notes
-
-
-starti - Use this command to start debugging at the first instruction.
