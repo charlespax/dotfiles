@@ -1,3 +1,11 @@
+The contents of this repository have been moved to the 'dots' repo
+
+
+
+
+
+
+
 # dotfiles
 These are my configuration files for various *nix applications (e.g. vim, bash, etc.).
 
